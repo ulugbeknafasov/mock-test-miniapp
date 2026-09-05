@@ -2,12 +2,11 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Testni boshlash</title>
+    <title>Mock Test</title>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
         * {
@@ -27,47 +26,65 @@
             margin: 0 auto;
         }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 25px;
+        .welcome {
+            margin: 10px 5px 25px;
         }
 
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        .welcome h1 {
+            font-size: 25px;
+            margin: 0 0 8px;
         }
 
-        input {
+        .welcome p {
+            margin: 0;
+            color: #777;
+            font-size: 15px;
+        }
+
+        .main-button {
             width: 100%;
-            padding: 14px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
+            height: 58px;
             margin-bottom: 12px;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
             background: #2481cc;
             color: white;
-            font-size: 16px;
+            font-size: 17px;
+            font-weight: bold;
             cursor: pointer;
         }
 
-        .title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 8px;
+        .main-button:active,
+        .small-button:active {
+            transform: scale(0.98);
         }
 
-        .description {
-            color: #777;
-            margin-bottom: 15px;
+        .small-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .small-button {
+            height: 58px;
+            border: none;
+            border-radius: 15px;
+            background: white;
+            color: #222;
+            font-size: 15px;
+            font-weight: bold;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+        }
+
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            text-align: center;
         }
     </style>
 </head>
@@ -76,47 +93,93 @@
 
 <div class="container">
 
-    <h1>📝 Testni boshlash</h1>
+    <div class="welcome">
+        <h1 id="welcomeText">👋 Assalomu alaykum!</h1>
+        <p>Mock Test platformasiga xush kelibsiz.</p>
+    </div>
 
-    <div class="card">
+    <button class="main-button" onclick="startTest()">
+        📝 Testni boshlash
+    </button>
 
-        <div class="title">
-            Test kodini kiriting
-        </div>
+    <button class="main-button" onclick="createTest()">
+        ➕ Test yaratish
+    </button>
 
-        <div class="description">
-            Sizga berilgan 4–10 belgili test kodini yozing.
-        </div>
+    <div class="small-buttons">
 
-        <input
-            type="text"
-            id="testCode"
-            maxlength="10"
-            placeholder="Masalan: 380H"
-        >
+        <button class="small-button" onclick="showResults()">
+            📊 Natijalarim
+        </button>
 
-        <button onclick="startTest()">
-            🚀 Testni boshlash
+        <button class="small-button" onclick="showProfile()">
+            👤 Profil
         </button>
 
     </div>
 
+    <div id="message" class="message"></div>
+
 </div>
 
 <script>
-    function startTest() {
+    const tg = window.Telegram.WebApp;
 
-        const code = document
-            .getElementById("testCode")
-            .value
-            .trim();
+    tg.ready();
+    tg.expand();
 
-        if (code.length < 4 || code.length > 10) {
-            alert("Test kodi 4–10 belgidan iborat bo‘lishi kerak.");
-            return;
+    // Telegram foydalanuvchi ma'lumotlari
+    const user = tg.initDataUnsafe?.user;
+
+    if (user) {
+        const firstName = user.first_name || "";
+        const lastName = user.last_name || "";
+
+        let fullName = firstName;
+
+        if (lastName) {
+            fullName += " " + lastName;
         }
 
-        alert("Test kodi qabul qilindi: " + code);
+        document.getElementById("welcomeText").textContent =
+            "👋 Assalomu alaykum, " + fullName + "!";
+    }
+
+    function startTest() {
+        showMessage(
+            "📝 Testni boshlash\n\n"
+            + "Bu bo‘limda test kodini kiritib, "
+            + "faol testlardan birini boshlaysiz."
+        );
+    }
+
+    function createTest() {
+        showMessage(
+            "➕ Test yaratish\n\n"
+            + "Bu bo‘limda yangi test yaratishingiz mumkin."
+        );
+    }
+
+    function showResults() {
+        showMessage(
+            "📊 Natijalarim\n\n"
+            + "Hozircha topshirilgan testlar mavjud emas."
+        );
+    }
+
+    function showProfile() {
+        showMessage(
+            "👤 Profil\n\n"
+            + "Bu yerda profil ma’lumotlaringizni "
+            + "boshqarishingiz mumkin."
+        );
+    }
+
+    function showMessage(text) {
+        const message = document.getElementById("message");
+
+        message.textContent = text;
+        message.style.display = "block";
     }
 </script>
 
