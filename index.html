@@ -31,7 +31,7 @@
         }
 
         .welcome h1 {
-            font-size: 25px;
+            font-size: 24px;
             margin: 0 0 8px;
         }
 
@@ -102,10 +102,6 @@
         📝 Testni boshlash
     </button>
 
-    <button class="main-button" onclick="createTest()">
-        ➕ Test yaratish
-    </button>
-
     <div class="small-buttons">
 
         <button class="small-button" onclick="showResults()">
@@ -128,7 +124,6 @@
     tg.ready();
     tg.expand();
 
-    // Telegram foydalanuvchi ma'lumotlari
     const user = tg.initDataUnsafe?.user;
 
     if (user) {
@@ -147,31 +142,22 @@
 
     function startTest() {
         showMessage(
-            "📝 Testni boshlash\n\n"
-            + "Bu bo‘limda test kodini kiritib, "
-            + "faol testlardan birini boshlaysiz."
-        );
-    }
-
-    function createTest() {
-        showMessage(
-            "➕ Test yaratish\n\n"
-            + "Bu bo‘limda yangi test yaratishingiz mumkin."
+            "📝 Testni boshlash\n\n" +
+            "Test kodini kiritish bo‘limi tez orada shu yerda bo‘ladi."
         );
     }
 
     function showResults() {
         showMessage(
-            "📊 Natijalarim\n\n"
-            + "Hozircha topshirilgan testlar mavjud emas."
+            "📊 Natijalarim\n\n" +
+            "Topshirgan testlaringiz natijalari shu yerda chiqadi."
         );
     }
 
     function showProfile() {
         showMessage(
-            "👤 Profil\n\n"
-            + "Bu yerda profil ma’lumotlaringizni "
-            + "boshqarishingiz mumkin."
+            "👤 Profil\n\n" +
+            "Profil sozlamalari shu yerda bo‘ladi."
         );
     }
 
