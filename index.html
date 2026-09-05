@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Testni boshlash</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2481cc;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #777;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📝 Testni boshlash</h1>
+
+    <div class="card">
+
+        <div class="title">
+            Test kodini kiriting
+        </div>
+
+        <div class="description">
+            Sizga berilgan 4–10 belgili test kodini yozing.
+        </div>
+
+        <input
+            type="text"
+            id="testCode"
+            maxlength="10"
+            placeholder="Masalan: 380H"
+        >
+
+        <button onclick="startTest()">
+            🚀 Testni boshlash
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+    function startTest() {
+
+        const code = document
+            .getElementById("testCode")
+            .value
+            .trim();
+
+        if (code.length < 4 || code.length > 10) {
+            alert("Test kodi 4–10 belgidan iborat bo‘lishi kerak.");
+            return;
+        }
+
+        alert("Test kodi qabul qilindi: " + code);
+    }
+</script>
+
+</body>
+</html>
