@@ -1,92 +1,82 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mock Test</title>
 
-    <title>Mock Test</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+* {
+    box-sizing: border-box;
+}
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #222;
+}
 
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            background: #f5f7fb;
-            color: #222;
-        }
+.container {
+    max-width: 500px;
+    margin: auto;
+}
 
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-        }
+.welcome {
+    margin: 10px 5px 25px;
+}
 
-        .welcome {
-            margin: 10px 5px 25px;
-        }
+.welcome h1 {
+    font-size: 24px;
+    margin: 0 0 8px;
+}
 
-        .welcome h1 {
-            font-size: 24px;
-            margin: 0 0 8px;
-        }
+.welcome p {
+    color: #777;
+    margin: 0;
+}
 
-        .welcome p {
-            margin: 0;
-            color: #777;
-            font-size: 15px;
-        }
+button {
+    width: 100%;
+    border: 0;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
 
-        .main-button {
-            width: 100%;
-            height: 58px;
-            margin-bottom: 12px;
-            border: none;
-            border-radius: 15px;
-            background: #2481cc;
-            color: white;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.main-button {
+    height: 58px;
+    margin-bottom: 12px;
+    background: #2481cc;
+    color: white;
+}
 
-        .main-button:active,
-        .small-button:active {
-            transform: scale(0.98);
-        }
+.small-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
 
-        .small-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 4px;
-        }
+.small-button {
+    height: 58px;
+    background: white;
+    color: #222;
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
 
-        .small-button {
-            height: 58px;
-            border: none;
-            border-radius: 15px;
-            background: white;
-            color: #222;
-            font-size: 15px;
-            font-weight: bold;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-            cursor: pointer;
-        }
-
-        .message {
-            display: none;
-            margin-top: 15px;
-            padding: 15px;
-            background: white;
-            border-radius: 15px;
-            text-align: center;
-        }
-    </style>
+.message {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 15px;
+    text-align: center;
+}
+</style>
 </head>
 
 <body>
@@ -119,54 +109,51 @@
 </div>
 
 <script>
-    const tg = window.Telegram.WebApp;
+const tg = window.Telegram.WebApp;
 
-    tg.ready();
-    tg.expand();
+tg.ready();
+tg.expand();
 
-    const user = tg.initDataUnsafe?.user;
+const user = tg.initDataUnsafe?.user;
 
-    if (user) {
-        const firstName = user.first_name || "";
-        const lastName = user.last_name || "";
+if (user) {
+    let name = user.first_name || "";
 
-        let fullName = firstName;
-
-        if (lastName) {
-            fullName += " " + lastName;
-        }
-
-        document.getElementById("welcomeText").textContent =
-            "👋 Assalomu alaykum, " + fullName + "!";
+    if (user.last_name) {
+        name += " " + user.last_name;
     }
 
-    function startTest() {
-        showMessage(
-            "📝 Testni boshlash\n\n" +
-            "Test kodini kiritish bo‘limi tez orada shu yerda bo‘ladi."
-        );
-    }
+    document.getElementById("welcomeText").textContent =
+        "👋 Assalomu alaykum, " + name + "!";
+}
 
-    function showResults() {
-        showMessage(
-            "📊 Natijalarim\n\n" +
-            "Topshirgan testlaringiz natijalari shu yerda chiqadi."
-        );
-    }
+function startTest() {
+    showMessage(
+        "📝 Testni boshlash\n\n" +
+        "Test kodini kiritish bo‘limi shu yerda bo‘ladi."
+    );
+}
 
-    function showProfile() {
-        showMessage(
-            "👤 Profil\n\n" +
-            "Profil sozlamalari shu yerda bo‘ladi."
-        );
-    }
+function showResults() {
+    showMessage(
+        "📊 Natijalarim\n\n" +
+        "Test natijalaringiz shu yerda chiqadi."
+    );
+}
 
-    function showMessage(text) {
-        const message = document.getElementById("message");
+function showProfile() {
+    showMessage(
+        "👤 Profil\n\n" +
+        "Profil sozlamalari shu yerda bo‘ladi."
+    );
+}
 
-        message.textContent = text;
-        message.style.display = "block";
-    }
+function showMessage(text) {
+    const message = document.getElementById("message");
+
+    message.textContent = text;
+    message.style.display = "block";
+}
 </script>
 
 </body>
