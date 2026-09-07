@@ -334,7 +334,16 @@ async function checkTest(){
             return;
         }
 
-        if(data.status === "finished" || data.expired){
+        if(data.test?.already_submitted){
+            showInlineMessage(
+                "startMessage",
+                "⚠️ Siz bu testni allaqachon topshirgansiz.\n\nNatijani test yakunlangach Natijalarim bo‘limidan ko‘rasiz.",
+                "warning"
+            );
+            return;
+        }
+
+        if(data.status === "finished" || data.expired || data.test?.status === "finished"){
             showInlineMessage(
                 "startMessage",
                 "🏁 Bu testning topshirish vaqti tugagan.\n\n⏳ Testga kirish mumkin emas.",
@@ -618,7 +627,11 @@ async function loadResults(){
                 '</div>' +
                 '<div class="small" style="margin-top:5px">' +
                 '📅 ' + escapeHtml(item.submitted_at || "—") +
-                '</div>';
+                '</div>' +
+                (item.status === "finished" && item.rank ?
+                    '<div class="small" style="margin-top:5px">🥇 Reyting: <b>' + escapeHtml(String(item.rank)) + '-o‘rin</b>' +
+                    (item.total_participants ? ' / ' + escapeHtml(String(item.total_participants)) + ' ta' : '') +
+                    '</div>' : '');
 
             list.appendChild(div);
         });
