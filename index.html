@@ -77,6 +77,11 @@ button{border:0;cursor:pointer}
             <button class="primary" onclick="openStartModal()">📝 Testni boshlash</button>
         </div>
 
+        <div class="grid">
+            <button class="secondary" onclick="showResults()">📊 Natijalarim</button>
+            <button class="secondary" onclick="showProfile()">👤 Profil</button>
+        </div>
+
         <div id="homeMessage" class="message hidden"></div>
     </section>
 
@@ -559,7 +564,7 @@ async function loadProfile(){
             throw new Error(data.message || "Profile error");
         }
 
-        const profile = data.profile || {};
+        const profile = data.profile || data;
         const name = profile.full_name || "Ism familiya";
 
         document.getElementById("profileName").textContent = name;
@@ -573,7 +578,7 @@ async function loadProfile(){
 
     }catch(error){
         if(fallback){
-            const fallbackName = [fallback.first_name,fallback.last_name].filter(Boolean).join(" ") || "Foydalanuvchi";
+            const fallbackName = "Ism familiya";
             document.getElementById("profileName").textContent = fallbackName;
             document.getElementById("profileAvatar").textContent = getInitials(fallbackName);
             document.getElementById("welcomeText").textContent =
