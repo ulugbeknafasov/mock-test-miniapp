@@ -80,11 +80,6 @@ button{border:0;cursor:pointer}
             <button class="primary" onclick="openStartModal()">📝 Testni boshlash</button>
         </div>
 
-        <div class="grid">
-            <button class="secondary" onclick="showResults()">📊 Natijalarim</button>
-            <button class="secondary" onclick="showProfile()">👤 Profil</button>
-        </div>
-
         <div id="homeMessage" class="message hidden"></div>
     </section>
 
@@ -378,7 +373,38 @@ function renderTest(){
     const container = document.getElementById("questionsContainer");
     container.innerHTML = "";
 
-    const questions = currentTest.questions || [];
+    /*
+       Testlar har doim 35 ta bo‘lmaydi.
+       Savollar soni test yaratilganda berilgan question_count dan olinadi.
+
+       Javob turi:
+       1–32  -> A/B/C/D
+       33–35 -> A/B/C/D/E/F
+       36+   -> aniq javob
+
+       Backend `questions` massivini yuborsa, uning type qiymati ustun hisoblanadi.
+       Agar yubormasa, question_count asosida avtomatik yaratiladi.
+    */
+    const questionCount = Number(currentTest.question_count || 0);
+    let questions = Array.isArray(currentTest.questions)
+        ? currentTest.questions
+        : [];
+
+    if (!questions.length && questionCount > 0) {
+        questions = Array.from({length: questionCount}, (_, i) => {
+            const number = i + 1;
+
+            let type = "multiple_choice_4";
+
+            if (number >= 33 && number <= 35) {
+                type = "multiple_choice_6";
+            } else if (number >= 36) {
+                type = "exact";
+            }
+
+            return { number, type };
+        });
+    }
 
     questions.forEach((q,index)=>{
         const number = Number(q.number || index+1);
@@ -393,8 +419,11 @@ function renderTest(){
         if(q.type === "exact"){
             const input = document.createElement("input");
             input.className = "exact-answer";
-            input.placeholder = "Javobingizni kiriting...";
-            input.addEventListener("input",()=>answers[String(number)] = input.value);
+            input.placeholder = "Aniq javob";
+            input.value = answers[String(number)] || "";
+            input.addEventListener("input",()=>{
+                answers[String(number)] = input.value;
+            });
             wrapper.appendChild(input);
         }else{
             const row = document.createElement("div");
@@ -408,13 +437,20 @@ function renderTest(){
                 const btn = document.createElement("button");
                 btn.className = "answer";
                 btn.textContent = letter;
+
+                if (answers[String(number)] === letter) {
+                    btn.classList.add("selected");
+                }
+
                 btn.onclick = ()=>{
                     answers[String(number)] = letter;
                     [...row.children].forEach(x=>x.classList.remove("selected"));
                     btn.classList.add("selected");
                 };
+
                 row.appendChild(btn);
             });
+
             wrapper.appendChild(row);
         }
 
