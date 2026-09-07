@@ -3,79 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2481cc">
 <title>Mock Test</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background: #f5f7fb;
-    color: #222;
-}
-
-.container {
-    max-width: 500px;
-    margin: auto;
-}
-
-.welcome {
-    margin: 10px 5px 25px;
-}
-
-.welcome h1 {
-    font-size: 24px;
-    margin: 0 0 8px;
-}
-
-.welcome p {
-    color: #777;
-    margin: 0;
-}
-
-button {
-    width: 100%;
-    border: 0;
-    border-radius: 15px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.main-button {
-    height: 58px;
-    margin-bottom: 12px;
-    background: #2481cc;
-    color: white;
-}
-
-.small-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.small-button {
-    height: 58px;
-    background: white;
-    color: #222;
-    box-shadow: 0 3px 12px rgba(0,0,0,.08);
-}
-
-.message {
-    display: none;
-    margin-top: 15px;
-    padding: 15px;
-    background: white;
-    border-radius: 15px;
-    text-align: center;
-}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,sans-serif;background:#f5f7fb;color:#222}
+body{padding:18px 16px 92px}
+button,input{font:inherit}
+button{border:0;cursor:pointer}
+.container{width:100%;max-width:520px;margin:auto}
+.welcome{margin:8px 4px 22px}
+.welcome h1{font-size:24px;margin:0 0 7px}
+.welcome p{color:#777;margin:0}
+.card{background:#fff;border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 3px 16px rgba(0,0,0,.06)}
+.card h2{font-size:19px;margin:0 0 15px}
+.primary{width:100%;height:56px;border-radius:15px;background:#2481cc;color:#fff;font-weight:700;font-size:16px}
+.secondary{width:100%;height:52px;border-radius:14px;background:#fff;font-weight:700;box-shadow:0 3px 12px rgba(0,0,0,.07)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:14px;font-weight:700;margin-bottom:7px}
+.field input{width:100%;height:50px;border:1px solid #d9dee7;border-radius:13px;padding:0 14px;outline:none;background:#fff}
+.field input:focus{border-color:#2481cc}
+.hidden{display:none!important}
+.message{margin-top:14px;padding:15px;border-radius:15px;background:#fff;text-align:center;white-space:pre-line;line-height:1.5}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:1000;padding:16px;align-items:flex-end;justify-content:center}
+.modal.show{display:flex}
+.modal-box{width:100%;max-width:520px;max-height:90vh;overflow:auto;background:#fff;border-radius:22px;padding:20px}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.modal-header h2{margin:0;font-size:21px}
+.close{width:38px;height:38px;border-radius:50%;background:#eef1f5;font-size:20px}
+.info{background:#f6f8fb;border-radius:15px;padding:14px;margin-bottom:10px}
+.info-title{font-size:13px;color:#777;margin-bottom:5px}
+.info-value{font-size:17px;font-weight:700}
+.timer{position:sticky;top:8px;z-index:10;background:#fff1f1;border-radius:14px;padding:13px;text-align:center;font-weight:700;margin-bottom:14px}
+.question{background:#fff;border-radius:16px;padding:15px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.question-title{font-weight:700;margin-bottom:12px}
+.answer-row{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.answer{height:48px;border:1px solid #d9dee7;border-radius:12px;background:#fff;font-weight:700}
+.answer.selected{background:#2481cc;color:#fff;border-color:#2481cc}
+.exact-answer{width:100%;height:48px;border:1px solid #d9dee7;border-radius:12px;padding:0 12px;outline:none}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;height:72px;background:rgba(255,255,255,.97);border-top:1px solid #e4e7ec;display:flex;justify-content:space-around;align-items:center;z-index:900;padding-bottom:env(safe-area-inset-bottom)}
+.nav-button{width:33.33%;height:64px;background:none;color:#777;font-size:12px;font-weight:600}
+.nav-icon{display:block;font-size:22px;margin-bottom:3px}
+.nav-button.active{color:#2481cc;font-weight:700}
+.result-item{border:1px solid #e2e6ec;border-radius:15px;padding:14px;margin-bottom:10px}
+.result-top{display:flex;justify-content:space-between;gap:10px}
+.grade{font-weight:800}
+.small{font-size:13px;color:#777}
+.profile-avatar{width:76px;height:76px;border-radius:50%;background:#2481cc;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;margin:5px auto 12px}
+.profile-center{text-align:center}
+.success{background:#eefaf0!important}
+.danger{background:#fff0f0!important}
+.warning{background:#fff7e6!important}
 </style>
 </head>
 
@@ -83,77 +65,601 @@ button {
 
 <div class="container">
 
-    <div class="welcome">
-        <h1 id="welcomeText">👋 Assalomu alaykum!</h1>
-        <p>Mock Test platformasiga xush kelibsiz.</p>
-    </div>
+    <section id="homeSection">
+        <div class="welcome">
+            <h1 id="welcomeText">👋 Assalomu alaykum!</h1>
+            <p>Mock Test platformasiga xush kelibsiz.</p>
+        </div>
 
-    <button class="main-button" onclick="startTest()">
-        📝 Testni boshlash
+        <div class="card">
+            <h2>📝 Testni boshlash</h2>
+            <p class="small">Test kodini kiriting va test holatini tekshiring.</p>
+            <button class="primary" onclick="openStartModal()">📝 Testni boshlash</button>
+        </div>
+
+        <div class="grid">
+            <button class="secondary" onclick="showResults()">📊 Natijalarim</button>
+            <button class="secondary" onclick="showProfile()">👤 Profil</button>
+        </div>
+
+        <div id="homeMessage" class="message hidden"></div>
+    </section>
+
+    <section id="resultsSection" class="hidden">
+        <div class="welcome">
+            <h1>📊 Natijalarim</h1>
+            <p>Oldin topshirgan testlaringiz.</p>
+        </div>
+        <div id="resultsList"></div>
+    </section>
+
+    <section id="profileSection" class="hidden">
+        <div class="welcome">
+            <h1>👤 Profil</h1>
+            <p>Profil ma'lumotlaringiz.</p>
+        </div>
+
+        <div class="card profile-center">
+            <div id="profileAvatar" class="profile-avatar">U</div>
+            <h2 id="profileName">Ism familiya</h2>
+            <div id="profileUsername" class="small">Telegram username</div>
+        </div>
+
+        <div class="card">
+            <div class="info">
+                <div class="info-title">Telegram ID</div>
+                <div id="profileTelegramId" class="info-value">—</div>
+            </div>
+
+            <button class="primary" onclick="openNameModal()">✏️ Ism-familiyani o‘zgartirish</button>
+        </div>
+    </section>
+</div>
+
+<!-- START TEST MODAL -->
+<div id="startModal" class="modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>📝 Testni boshlash</h2>
+            <button class="close" onclick="closeModal('startModal')">✕</button>
+        </div>
+        <div class="field">
+            <label>🔑 Test kodi</label>
+            <input id="testCodeInput" maxlength="10" autocomplete="off"
+                   placeholder="Masalan: ABC123"
+                   oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')">
+        </div>
+        <button class="primary" id="checkTestButton" onclick="checkTest()">Testni tekshirish ➜</button>
+        <div id="startMessage" class="message hidden"></div>
+    </div>
+</div>
+
+<!-- TEST MODAL -->
+<div id="testModal" class="modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2 id="testTitle">📝 Test</h2>
+            <button class="close" onclick="closeTestWithoutSubmit()">✕</button>
+        </div>
+
+        <div id="testTimer" class="timer">⏳ Taymer tayyorlanmoqda...</div>
+        <div id="testInfo" class="info"></div>
+        <div id="questionsContainer"></div>
+
+        <button id="submitButton" class="primary" onclick="submitTest()">✅ Testni topshirish</button>
+    </div>
+</div>
+
+<!-- PROFILE NAME MODAL -->
+<div id="nameModal" class="modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>✏️ Ism-familiya</h2>
+            <button class="close" onclick="closeModal('nameModal')">✕</button>
+        </div>
+        <p class="small">Profilingizda ko‘rinadigan ism-familiyani kiriting.</p>
+        <div class="field">
+            <label>Ism familiya</label>
+            <input id="fullNameInput" maxlength="100" placeholder="Masalan: Ulug‘bek Nafasov">
+        </div>
+        <button class="primary" onclick="saveName()">💾 Saqlash</button>
+        <div id="nameMessage" class="message hidden"></div>
+    </div>
+</div>
+
+<!-- MESSAGE MODAL -->
+<div id="messageModal" class="modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>📋 Xabar</h2>
+            <button class="close" onclick="closeModal('messageModal')">✕</button>
+        </div>
+        <div id="messageText" class="message"></div>
+        <button class="primary" onclick="closeModal('messageModal')">Tushunarli</button>
+    </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+    <button id="homeButton" class="nav-button active" onclick="showHome()">
+        <span class="nav-icon">🏠</span>Bosh sahifa
     </button>
-
-    <div class="small-buttons">
-
-        <button class="small-button" onclick="showResults()">
-            📊 Natijalarim
-        </button>
-
-        <button class="small-button" onclick="showProfile()">
-            👤 Profil
-        </button>
-
-    </div>
-
-    <div id="message" class="message"></div>
-
+    <button id="resultsButton" class="nav-button" onclick="showResults()">
+        <span class="nav-icon">📊</span>Natijalarim
+    </button>
+    <button id="profileButton" class="nav-button" onclick="showProfile()">
+        <span class="nav-icon">👤</span>Profil
+    </button>
 </div>
 
 <script>
 const tg = window.Telegram.WebApp;
-
 tg.ready();
 tg.expand();
 
-const user = tg.initDataUnsafe?.user;
+const API_BASE = "https://wrapping-recorder-alert-local.trycloudflare.com";
+const initData = tg.initData || "";
+const tgUser = tg.initDataUnsafe?.user || null;
 
-if (user) {
-    let name = user.first_name || "";
+let currentTest = null;
+let answers = {};
+let timerInterval = null;
+let submitting = false;
 
-    if (user.last_name) {
-        name += " " + user.last_name;
+function apiHeaders(){
+    return {
+        "Content-Type":"application/json",
+        "X-Telegram-Init-Data":initData
+    };
+}
+
+function showHome(){
+    setSection("home");
+}
+
+function showResults(){
+    setSection("results");
+    loadResults();
+}
+
+function showProfile(){
+    setSection("profile");
+    loadProfile();
+}
+
+function setSection(name){
+    document.getElementById("homeSection").classList.toggle("hidden", name !== "home");
+    document.getElementById("resultsSection").classList.toggle("hidden", name !== "results");
+    document.getElementById("profileSection").classList.toggle("hidden", name !== "profile");
+
+    document.getElementById("homeButton").classList.toggle("active", name === "home");
+    document.getElementById("resultsButton").classList.toggle("active", name === "results");
+    document.getElementById("profileButton").classList.toggle("active", name === "profile");
+
+    window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function openStartModal(){
+    document.getElementById("testCodeInput").value = "";
+    hideMessage("startMessage");
+    document.getElementById("startModal").classList.add("show");
+}
+
+function openNameModal(){
+    document.getElementById("fullNameInput").value =
+        document.getElementById("profileName").textContent || "";
+    hideMessage("nameMessage");
+    document.getElementById("nameModal").classList.add("show");
+}
+
+function closeModal(id){
+    document.getElementById(id).classList.remove("show");
+}
+
+function showMessage(text){
+    document.getElementById("messageText").textContent = text;
+    document.getElementById("messageModal").classList.add("show");
+}
+
+function showInlineMessage(id,text,kind=""){
+    const el = document.getElementById(id);
+    el.textContent = text;
+    el.className = "message " + kind;
+}
+
+function hideMessage(id){
+    document.getElementById(id).className = "message hidden";
+    document.getElementById(id).textContent = "";
+}
+
+async function checkTest(){
+    const code = document.getElementById("testCodeInput").value.trim().toUpperCase();
+    const button = document.getElementById("checkTestButton");
+
+    if(!code){
+        showInlineMessage("startMessage","❗ Test kodini kiriting.","danger");
+        return;
+    }
+    if(!/^[A-Z0-9]{4,10}$/.test(code)){
+        showInlineMessage("startMessage","❗ Test kodi 4–10 ta A–Z va 0–9 belgilaridan iborat bo‘lishi kerak.","danger");
+        return;
     }
 
-    document.getElementById("welcomeText").textContent =
-        "👋 Assalomu alaykum, " + name + "!";
+    button.disabled = true;
+    button.textContent = "Tekshirilmoqda...";
+
+    try{
+        const response = await fetch(API_BASE + "/api/participant/test/" + encodeURIComponent(code), {
+            method:"GET",
+            headers:apiHeaders()
+        });
+
+        const data = await response.json();
+
+        if(!response.ok || !data.success){
+            showInlineMessage(
+                "startMessage",
+                data.message || "❌ Test topilmadi.",
+                "danger"
+            );
+            return;
+        }
+
+        if(data.status === "finished" || data.expired){
+            showInlineMessage(
+                "startMessage",
+                "🏁 Bu testning topshirish vaqti tugagan.\n\n⏳ Testga kirish mumkin emas.",
+                "warning"
+            );
+            return;
+        }
+
+        currentTest = data.test;
+        answers = {};
+        closeModal("startModal");
+        renderTest();
+        document.getElementById("testModal").classList.add("show");
+        startTimer(currentTest.ends_at);
+
+    }catch(error){
+        console.error(error);
+        showInlineMessage(
+            "startMessage",
+            "❌ Server bilan bog‘lanib bo‘lmadi.\n\nInternet yoki serverni tekshiring.",
+            "danger"
+        );
+    }finally{
+        button.disabled = false;
+        button.textContent = "Testni tekshirish ➜";
+    }
 }
 
-function startTest() {
+function renderTest(){
+    document.getElementById("testTitle").textContent =
+        "📝 Test: " + (currentTest.code || "");
+
+    document.getElementById("testInfo").innerHTML =
+        "📢 Kanal: <b>" + escapeHtml(currentTest.channel || "—") + "</b><br>" +
+        "📝 Savollar: <b>" + Number(currentTest.question_count || 0) + " ta</b>";
+
+    const container = document.getElementById("questionsContainer");
+    container.innerHTML = "";
+
+    const questions = currentTest.questions || [];
+
+    questions.forEach((q,index)=>{
+        const number = Number(q.number || index+1);
+        const wrapper = document.createElement("div");
+        wrapper.className = "question";
+
+        const title = document.createElement("div");
+        title.className = "question-title";
+        title.textContent = number + "-savol";
+        wrapper.appendChild(title);
+
+        if(q.type === "exact"){
+            const input = document.createElement("input");
+            input.className = "exact-answer";
+            input.placeholder = "Javobingizni kiriting...";
+            input.addEventListener("input",()=>answers[String(number)] = input.value);
+            wrapper.appendChild(input);
+        }else{
+            const row = document.createElement("div");
+            row.className = "answer-row";
+
+            const letters = q.type === "multiple_choice_6"
+                ? ["A","B","C","D","E","F"]
+                : ["A","B","C","D"];
+
+            letters.forEach(letter=>{
+                const btn = document.createElement("button");
+                btn.className = "answer";
+                btn.textContent = letter;
+                btn.onclick = ()=>{
+                    answers[String(number)] = letter;
+                    [...row.children].forEach(x=>x.classList.remove("selected"));
+                    btn.classList.add("selected");
+                };
+                row.appendChild(btn);
+            });
+            wrapper.appendChild(row);
+        }
+
+        container.appendChild(wrapper);
+    });
+}
+
+function startTimer(endsAt){
+    clearInterval(timerInterval);
+
+    function tick(){
+        const end = new Date(endsAt).getTime();
+        const diff = Math.max(0,end-Date.now());
+
+        if(diff <= 0){
+            document.getElementById("testTimer").textContent = "🏁 Vaqt tugadi!";
+            clearInterval(timerInterval);
+            if(!submitting) submitTest(true);
+            return;
+        }
+
+        const totalSeconds = Math.floor(diff/1000);
+        const h = Math.floor(totalSeconds/3600);
+        const m = Math.floor((totalSeconds%3600)/60);
+        const s = totalSeconds%60;
+
+        document.getElementById("testTimer").textContent =
+            "⏳ Qolgan vaqt: " +
+            (h ? String(h).padStart(2,"0")+":" : "") +
+            String(m).padStart(2,"0")+":" +
+            String(s).padStart(2,"0");
+    }
+
+    tick();
+    timerInterval = setInterval(tick,1000);
+}
+
+async function submitTest(auto=false){
+    if(submitting || !currentTest) return;
+
+    const questionCount = Number(currentTest.question_count || 0);
+    const missing = [];
+
+    for(let i=1;i<=questionCount;i++){
+        if(!String(answers[String(i)] || "").trim()) missing.push(i);
+    }
+
+    if(missing.length && !auto){
+        showMessage(
+            "❗ Barcha savollarga javob bering.\n\n" +
+            "Javob berilmagan savollar: " + missing.join(", ")
+        );
+        return;
+    }
+
+    submitting = true;
+    clearInterval(timerInterval);
+
+    const button = document.getElementById("submitButton");
+    button.disabled = true;
+    button.textContent = auto ? "⏳ Vaqt tugadi..." : "Yuborilmoqda...";
+
+    try{
+        const response = await fetch(API_BASE + "/api/participant/submit",{
+            method:"POST",
+            headers:apiHeaders(),
+            body:JSON.stringify({
+                test_id:currentTest.id,
+                answers:answers,
+                auto_submit:auto
+            })
+        });
+
+        const data = await response.json();
+
+        if(!response.ok || !data.success){
+            showMessage(data.message || "❌ Javoblarni yuborishda xatolik.");
+            return;
+        }
+
+        closeModal("testModal");
+
+        showMessage(
+            "✅ Testni muvaffaqiyatli topshirdingiz!\n\n" +
+            "📊 Javoblaringiz qabul qilindi.\n" +
+            "⏳ Natijalarni kuting...\n\n" +
+            "Natijalar test yakunlangandan so‘ng barcha ishtirokchilar natijalari hisoblangach yuboriladi."
+        );
+
+        currentTest = null;
+        answers = {};
+
+    }catch(error){
+        console.error(error);
+        showMessage("❌ Server bilan bog‘lanib bo‘lmadi.");
+    }finally{
+        submitting = false;
+        button.disabled = false;
+        button.textContent = "✅ Testni topshirish";
+    }
+}
+
+function closeTestWithoutSubmit(){
     showMessage(
-        "📝 Testni boshlash\n\n" +
-        "Test kodini kiritish bo‘limi shu yerda bo‘ladi."
+        "⚠️ Test oynasi yopiladi.\n\n" +
+        "Javoblaringiz topshirilmaydi. Testni davom ettirish uchun oynani yopmang."
     );
 }
 
-function showResults() {
-    showMessage(
-        "📊 Natijalarim\n\n" +
-        "Test natijalaringiz shu yerda chiqadi."
-    );
+async function loadResults(){
+    const list = document.getElementById("resultsList");
+    list.innerHTML = '<div class="message">⏳ Natijalar yuklanmoqda...</div>';
+
+    try{
+        const response = await fetch(API_BASE + "/api/participant/results",{
+            method:"GET",
+            headers:apiHeaders()
+        });
+        const data = await response.json();
+
+        if(!response.ok || !data.success){
+            list.innerHTML = '<div class="message danger">' +
+                escapeHtml(data.message || "Natijalarni olishda xatolik.") +
+                '</div>';
+            return;
+        }
+
+        const results = data.results || [];
+
+        if(!results.length){
+            list.innerHTML = '<div class="message">📭 Hozircha topshirilgan testlar yo‘q.</div>';
+            return;
+        }
+
+        list.innerHTML = "";
+        results.forEach(item=>{
+            const div = document.createElement("div");
+            div.className = "result-item";
+
+            const grade = item.grade || "NC";
+            div.innerHTML =
+                '<div class="result-top">' +
+                '<b>📝 Test: ' + escapeHtml(item.code || "—") + '</b>' +
+                '<span class="grade">' + escapeHtml(grade) + '</span>' +
+                '</div>' +
+                '<div class="small" style="margin-top:8px">' +
+                '📈 Natija: <b>' + escapeHtml(String(item.percent ?? "—")) + '%</b>' +
+                ' &nbsp; ⭐ Ball: <b>' + escapeHtml(String(item.score ?? "—")) + '</b>' +
+                '</div>' +
+                '<div class="small" style="margin-top:5px">' +
+                '📅 ' + escapeHtml(item.submitted_at || "—") +
+                '</div>';
+
+            list.appendChild(div);
+        });
+
+    }catch(error){
+        console.error(error);
+        list.innerHTML = '<div class="message danger">❌ Server bilan bog‘lanib bo‘lmadi.</div>';
+    }
 }
 
-function showProfile() {
-    showMessage(
-        "👤 Profil\n\n" +
-        "Profil sozlamalari shu yerda bo‘ladi."
-    );
+async function loadProfile(){
+    const fallback = tgUser;
+
+    if(fallback){
+        document.getElementById("profileTelegramId").textContent = fallback.id || "—";
+        document.getElementById("profileUsername").textContent =
+            fallback.username ? "@" + fallback.username : "Username mavjud emas";
+    }
+
+    try{
+        const response = await fetch(API_BASE + "/api/participant/profile",{
+            method:"GET",
+            headers:apiHeaders()
+        });
+        const data = await response.json();
+
+        if(!response.ok || !data.success){
+            throw new Error(data.message || "Profile error");
+        }
+
+        const profile = data.profile || {};
+        const name = profile.full_name || "Ism familiya";
+
+        document.getElementById("profileName").textContent = name;
+        document.getElementById("profileAvatar").textContent = getInitials(name);
+        document.getElementById("profileTelegramId").textContent = profile.telegram_id || (fallback?.id || "—");
+        document.getElementById("profileUsername").textContent =
+            profile.username ? "@" + profile.username : "Username mavjud emas";
+
+        document.getElementById("welcomeText").textContent =
+            "👋 Assalomu alaykum, " + name + "!";
+
+    }catch(error){
+        if(fallback){
+            const fallbackName = [fallback.first_name,fallback.last_name].filter(Boolean).join(" ") || "Foydalanuvchi";
+            document.getElementById("profileName").textContent = fallbackName;
+            document.getElementById("profileAvatar").textContent = getInitials(fallbackName);
+            document.getElementById("welcomeText").textContent =
+                "👋 Assalomu alaykum, " + fallbackName + "!";
+        }
+    }
 }
 
-function showMessage(text) {
-    const message = document.getElementById("message");
+async function saveName(){
+    const name = document.getElementById("fullNameInput").value.trim();
 
-    message.textContent = text;
-    message.style.display = "block";
+    if(name.length < 3){
+        showInlineMessage("nameMessage","❗ Ism-familiya kiriting.","danger");
+        return;
+    }
+
+    try{
+        const response = await fetch(API_BASE + "/api/participant/profile",{
+            method:"POST",
+            headers:apiHeaders(),
+            body:JSON.stringify({full_name:name})
+        });
+
+        const data = await response.json();
+
+        if(!response.ok || !data.success){
+            showInlineMessage("nameMessage",data.message || "❌ Saqlashda xatolik.","danger");
+            return;
+        }
+
+        document.getElementById("profileName").textContent = name;
+        document.getElementById("profileAvatar").textContent = getInitials(name);
+        document.getElementById("welcomeText").textContent =
+            "👋 Assalomu alaykum, " + name + "!";
+
+        closeModal("nameModal");
+        showMessage("✅ Ism-familiyangiz muvaffaqiyatli saqlandi.");
+
+    }catch(error){
+        console.error(error);
+        showInlineMessage("nameMessage","❌ Server bilan bog‘lanib bo‘lmadi.","danger");
+    }
 }
+
+function getInitials(name){
+    return String(name).trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase() || "U";
+}
+
+function escapeHtml(text){
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+/* Copy/drag/context-menu protection.
+   Form inputs remain usable. */
+document.addEventListener("contextmenu",e=>{
+    if(!["INPUT","TEXTAREA"].includes(e.target.tagName)) e.preventDefault();
+});
+document.addEventListener("selectstart",e=>{
+    if(!["INPUT","TEXTAREA"].includes(e.target.tagName)) e.preventDefault();
+});
+document.addEventListener("dragstart",e=>e.preventDefault());
+document.addEventListener("copy",e=>{
+    if(!["INPUT","TEXTAREA"].includes(document.activeElement?.tagName)) e.preventDefault();
+});
+document.addEventListener("cut",e=>{
+    if(!["INPUT","TEXTAREA"].includes(document.activeElement?.tagName)) e.preventDefault();
+});
+
+/* Modal tashqarisiga bosilganda yopish */
+["startModal","nameModal","messageModal"].forEach(id=>{
+    document.getElementById(id).addEventListener("click",e=>{
+        if(e.target === e.currentTarget) closeModal(id);
+    });
+});
+
+loadProfile();
 </script>
 
 </body>
