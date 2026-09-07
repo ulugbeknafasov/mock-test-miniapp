@@ -58,6 +58,9 @@ button{border:0;cursor:pointer}
 .success{background:#eefaf0!important}
 .danger{background:#fff0f0!important}
 .warning{background:#fff7e6!important}
+.answer-modal-box{max-height:92vh}
+.answer-note{background:#f1f5f9;border-radius:14px;padding:14px;margin-bottom:14px;line-height:1.5;color:#334155}
+.answer-modal-box #questionsContainer{padding-bottom:4px}
 </style>
 </head>
 
@@ -134,7 +137,7 @@ button{border:0;cursor:pointer}
     </div>
 </div>
 
-<!-- TEST MODAL -->
+<!-- TEST INFO MODAL -->
 <div id="testModal" class="modal">
     <div class="modal-box">
         <div class="modal-header">
@@ -144,6 +147,26 @@ button{border:0;cursor:pointer}
 
         <div id="testTimer" class="timer">⏳ Taymer tayyorlanmoqda...</div>
         <div id="testInfo" class="info"></div>
+
+        <button class="primary" onclick="openAnswerModal()">📝 Javob berish</button>
+    </div>
+</div>
+
+<!-- ANSWER MODAL -->
+<div id="answerModal" class="modal">
+    <div class="modal-box answer-modal-box">
+        <div class="modal-header">
+            <h2>📝 Javoblar</h2>
+            <button class="close" onclick="closeAnswerModal()">✕</button>
+        </div>
+
+        <div id="answerTimer" class="timer">⏳ Qolgan vaqt: --:--</div>
+
+        <div class="answer-note">
+            Savol matnlari bu yerga kiritilmaydi.<br>
+            Savollar Telegram kanalida bo‘ladi. Bu oynada faqat javoblar belgilanadi.
+        </div>
+
         <div id="questionsContainer"></div>
 
         <button id="submitButton" class="primary" onclick="submitTest()">✅ Testni topshirish</button>
@@ -197,7 +220,7 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-const API_BASE = "https://solution-clean-indexes-claire.trycloudflare.com";
+const API_BASE = "https://holly-respondent-powerful-fits.trycloudflare.com";
 const initData = tg.initData || "";
 const tgUser = tg.initDataUnsafe?.user || null;
 
@@ -334,6 +357,16 @@ async function checkTest(){
     }
 }
 
+function openAnswerModal(){
+    if(!currentTest) return;
+    document.getElementById("answerModal").classList.add("show");
+    startTimer(currentTest.ends_at);
+}
+
+function closeAnswerModal(){
+    document.getElementById("answerModal").classList.remove("show");
+}
+
 function renderTest(){
     document.getElementById("testTitle").textContent =
         "📝 Test: " + (currentTest.code || "");
@@ -398,6 +431,7 @@ function startTimer(endsAt){
 
         if(diff <= 0){
             document.getElementById("testTimer").textContent = "🏁 Vaqt tugadi!";
+            document.getElementById("answerTimer").textContent = "🏁 Vaqt tugadi!";
             clearInterval(timerInterval);
             if(!submitting) submitTest(true);
             return;
@@ -408,11 +442,14 @@ function startTimer(endsAt){
         const m = Math.floor((totalSeconds%3600)/60);
         const s = totalSeconds%60;
 
-        document.getElementById("testTimer").textContent =
+        const timerText =
             "⏳ Qolgan vaqt: " +
             (h ? String(h).padStart(2,"0")+":" : "") +
             String(m).padStart(2,"0")+":" +
             String(s).padStart(2,"0");
+
+        document.getElementById("testTimer").textContent = timerText;
+        document.getElementById("answerTimer").textContent = timerText;
     }
 
     tick();
@@ -463,6 +500,7 @@ async function submitTest(auto=false){
         }
 
         closeModal("testModal");
+        closeAnswerModal();
 
         showMessage(
             "✅ Testni muvaffaqiyatli topshirdingiz!\n\n" +
@@ -565,25 +603,22 @@ async function loadProfile(){
         }
 
         const profile = data.profile || data;
-        const name = profile.full_name || "Ism familiya";
+        const name = String(profile.full_name || "").trim() || "Ism-familiya kiritilmagan";
 
         document.getElementById("profileName").textContent = name;
         document.getElementById("profileAvatar").textContent = getInitials(name);
-        document.getElementById("profileTelegramId").textContent = fallback?.id || "—";
+        document.getElementById("profileTelegramId").textContent = profile.telegram_id || (fallback?.id || "—");
         document.getElementById("profileUsername").textContent =
-            fallback?.username ? "@" + fallback.username : "Username mavjud emas";
+            profile.username ? "@" + profile.username : "Username mavjud emas";
 
         document.getElementById("welcomeText").textContent =
             "👋 Assalomu alaykum, " + name + "!";
 
     }catch(error){
-        if(fallback){
-            const fallbackName = "Ism familiya";
-            document.getElementById("profileName").textContent = fallbackName;
-            document.getElementById("profileAvatar").textContent = getInitials(fallbackName);
-            document.getElementById("welcomeText").textContent =
-                "👋 Assalomu alaykum, " + fallbackName + "!";
-        }
+        console.error(error);
+        document.getElementById("profileName").textContent = "Ism-familiya kiritilmagan";
+        document.getElementById("profileAvatar").textContent = "?";
+        document.getElementById("welcomeText").textContent = "👋 Assalomu alaykum!";
     }
 }
 
