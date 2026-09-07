@@ -77,6 +77,11 @@ button{border:0;cursor:pointer}
             <button class="primary" onclick="openStartModal()">📝 Testni boshlash</button>
         </div>
 
+        <div class="grid">
+            <button class="secondary" onclick="showResults()">📊 Natijalarim</button>
+            <button class="secondary" onclick="showProfile()">👤 Profil</button>
+        </div>
+
         <div id="homeMessage" class="message hidden"></div>
     </section>
 
@@ -192,7 +197,7 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-const API_BASE = "https://solution-clean-indexes-claire.trycloudflare.com";
+const API_BASE = "https://holly-respondent-powerful-fits.trycloudflare.com";
 const initData = tg.initData || "";
 const tgUser = tg.initDataUnsafe?.user || null;
 
@@ -564,9 +569,9 @@ async function loadProfile(){
 
         document.getElementById("profileName").textContent = name;
         document.getElementById("profileAvatar").textContent = getInitials(name);
-        document.getElementById("profileTelegramId").textContent = profile.telegram_id || (fallback?.id || "—");
+        document.getElementById("profileTelegramId").textContent = fallback?.id || "—";
         document.getElementById("profileUsername").textContent =
-            profile.username ? "@" + profile.username : "Username mavjud emas";
+            fallback?.username ? "@" + fallback.username : "Username mavjud emas";
 
         document.getElementById("welcomeText").textContent =
             "👋 Assalomu alaykum, " + name + "!";
