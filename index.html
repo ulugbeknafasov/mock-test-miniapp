@@ -80,6 +80,58 @@ button{border:0;cursor:pointer}
  .dual-answer-part{grid-template-columns:25px minmax(0,1fr);gap:6px}
  .dual-answer .exact-answer{height:44px;font-size:14px}
 }
+
+/* FINAL FIX: 36-45 dual answers - generous spacing, no overlap */
+.question.dual-question {
+    display:flex !important;
+    align-items:flex-start !important;
+    min-height:142px !important;
+    height:auto !important;
+    padding:16px 10px 20px !important;
+    margin-bottom:16px !important;
+    box-sizing:border-box !important;
+    gap:12px !important;
+}
+.question.dual-question .question-title {
+    flex:0 0 48px !important;
+    min-width:48px !important;
+    margin:8px 0 0 !important;
+    line-height:1.2 !important;
+}
+.dual-answer {
+    flex:1 1 auto !important;
+    width:auto !important;
+    display:flex !important;
+    flex-direction:column !important;
+    gap:17px !important;
+    padding:0 !important;
+}
+.dual-answer-part {
+    display:grid !important;
+    grid-template-columns:30px minmax(0,1fr) !important;
+    align-items:center !important;
+    gap:8px !important;
+    min-height:50px !important;
+    width:100% !important;
+}
+.dual-answer-label {
+    line-height:1.2 !important;
+    white-space:nowrap !important;
+}
+.dual-answer .exact-answer {
+    width:100% !important;
+    height:50px !important;
+    min-height:50px !important;
+    box-sizing:border-box !important;
+}
+@media(max-width:420px){
+    .question.dual-question { min-height:150px !important; padding:16px 8px 22px !important; margin-bottom:18px !important; gap:10px !important; }
+    .question.dual-question .question-title { flex-basis:44px !important; min-width:44px !important; }
+    .dual-answer { gap:19px !important; }
+    .dual-answer-part { grid-template-columns:28px minmax(0,1fr) !important; min-height:52px !important; gap:8px !important; }
+    .dual-answer .exact-answer { height:52px !important; min-height:52px !important; }
+}
+
 </style>
 </head>
 
