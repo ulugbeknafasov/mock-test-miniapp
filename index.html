@@ -418,7 +418,9 @@ function renderTest(){
 
             if (number >= 33 && number <= 35) {
                 type = "multiple_choice_6";
-            } else if (number >= 36) {
+            } else if (number >= 36 && number <= 45) {
+                type = "double_exact";
+            } else if (number > 45) {
                 type = "exact";
             }
 
@@ -436,7 +438,41 @@ function renderTest(){
         title.textContent = number + "-savol";
         wrapper.appendChild(title);
 
-        if(q.type === "exact"){
+        if(q.type === "double_exact"){
+            const pair = Array.isArray(answers[String(number)]) ? answers[String(number)] : ["", ""];
+            const wrap = document.createElement("div");
+            wrap.style.display = "grid";
+            wrap.style.gap = "8px";
+            wrap.style.flex = "1";
+
+            const labelA = document.createElement("div");
+            labelA.textContent = "a)";
+            labelA.style.fontWeight = "700";
+            const inputA = document.createElement("input");
+            inputA.className = "exact-answer";
+            inputA.placeholder = "a) javob";
+            inputA.value = pair[0] || "";
+
+            const labelB = document.createElement("div");
+            labelB.textContent = "b)";
+            labelB.style.fontWeight = "700";
+            const inputB = document.createElement("input");
+            inputB.className = "exact-answer";
+            inputB.placeholder = "b) javob";
+            inputB.value = pair[1] || "";
+
+            const savePair = ()=>{
+                answers[String(number)] = [inputA.value, inputB.value];
+            };
+            inputA.addEventListener("input", savePair);
+            inputB.addEventListener("input", savePair);
+
+            wrap.appendChild(labelA);
+            wrap.appendChild(inputA);
+            wrap.appendChild(labelB);
+            wrap.appendChild(inputB);
+            wrapper.appendChild(wrap);
+        }else if(q.type === "exact"){
             const input = document.createElement("input");
             input.className = "exact-answer";
             input.placeholder = "Aniq javob";
@@ -519,7 +555,12 @@ async function submitTest(auto=false){
     const missing = [];
 
     for(let i=1;i<=questionCount;i++){
-        if(!String(answers[String(i)] || "").trim()) missing.push(i);
+        if(i >= 36 && i <= 45){
+            const pair = answers[String(i)];
+            if(!Array.isArray(pair) || !String(pair[0] || "").trim() || !String(pair[1] || "").trim()) missing.push(i);
+        }else if(!String(answers[String(i)] || "").trim()) {
+            missing.push(i);
+        }
     }
 
     if(missing.length && !auto){
