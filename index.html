@@ -43,17 +43,17 @@ button{border:0;cursor:pointer}
 .question-title{font-weight:700;margin-bottom:12px}
 .answer-row{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
 .question{background:#fff;border-radius:14px;padding:12px 8px;margin-bottom:8px;box-shadow:none;border:1px solid #edf0f4;display:flex;align-items:flex-start;gap:10px}
-.question-title{font-weight:700;min-width:48px;margin:4px 0 0;font-size:16px}
+.question-title{font-weight:700;min-width:48px;flex:0 0 48px;margin:4px 0 0;font-size:16px}
 .answer-row{display:flex;align-items:center;justify-content:flex-start;gap:12px;flex:1;flex-wrap:nowrap}
 .answer{width:44px;height:44px;min-width:44px;border:2px solid #cbd2dc;border-radius:50%;background:#fff;font-weight:700;font-size:16px;padding:0;display:flex;align-items:center;justify-content:center}
 .answer.selected{background:#2481cc;color:#fff;border-color:#2481cc}
 .answer:hover{border-color:#2481cc}
 .exact-answer{flex:1;width:100%;height:46px;border:1px solid #d9dee7;border-radius:12px;padding:0 12px;outline:none}
 .exact-answer{width:100%;height:48px;border:1px solid #d9dee7;border-radius:12px;padding:0 12px;outline:none}
-.dual-answer{width:100%;display:flex;flex-direction:column;gap:9px;flex:1;min-width:0}
-.dual-answer-part{display:grid;grid-template-columns:28px minmax(0,1fr);align-items:center;gap:7px;width:100%;min-width:0}
+.dual-answer{width:100%;display:flex;flex-direction:column;gap:10px;flex:1 1 auto;min-width:0;padding:2px 0 4px}
+.dual-answer-part{display:grid;grid-template-columns:28px minmax(0,1fr);align-items:center;gap:7px;width:100%;min-width:0;min-height:46px}
 .dual-answer-label{font-weight:700;font-size:15px;color:#333}
-.dual-answer .exact-answer{flex:1;width:100%;min-width:0;height:46px;box-sizing:border-box}
+.dual-answer .exact-answer{flex:1;width:100%;min-width:0;height:46px;box-sizing:border-box;display:block}
 .bottom-nav{position:fixed;left:0;right:0;bottom:0;height:72px;background:rgba(255,255,255,.97);border-top:1px solid #e4e7ec;display:flex;justify-content:space-around;align-items:center;z-index:900;padding-bottom:env(safe-area-inset-bottom)}
 .nav-button{width:33.33%;height:64px;background:none;color:#777;font-size:12px;font-weight:600}
 .nav-icon{display:block;font-size:22px;margin-bottom:3px}
@@ -447,6 +447,7 @@ function renderTest(){
         wrapper.appendChild(title);
 
         if(q.type === "double_exact"){
+            wrapper.classList.add("dual-question");
             const pair = Array.isArray(answers[String(number)]) ? answers[String(number)] : ["", ""];
             const wrap = document.createElement("div");
             wrap.className = "dual-answer";
