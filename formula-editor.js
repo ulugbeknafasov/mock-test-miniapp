@@ -976,39 +976,33 @@
   // 12. FORMULA KIRITISH
   // =========================================
 
+  function insertValue(value) {
+    if (!modal) return;
 
-function insertValue(value) {
-  if (!modal) return;
+    if (IS_MATH() && !mathEditor.hidden) {
+      mathEditor.executeCommand([
+        "insert",
+        value,
+        {
+          selectionMode: "placeholder"
+        }
+      ]);
 
-  if (IS_MATH() && !mathEditor.hidden) {
-    if (document.activeElement !== mathEditor) {
-      mathEditor.focus({ preventScroll: true });
+      return;
     }
 
-    mathEditor.executeCommand([
-      "insert",
+    const start = unicodeEditor.selectionStart;
+    const end = unicodeEditor.selectionEnd;
+
+    unicodeEditor.setRangeText(
       value,
-      {
-        selectionMode: "placeholder"
-      }
-    ]);
+      start,
+      end,
+      "end"
+    );
 
-    return;
+    unicodeEditor.focus();
   }
-
-  const start = unicodeEditor.selectionStart;
-  const end = unicodeEditor.selectionEnd;
-
-  unicodeEditor.setRangeText(
-    value,
-    start,
-    end,
-    "end"
-  );
-
-  unicodeEditor.focus();
-}
-
 
   // =========================================
   // 13. KLAVIATURANI CHIZISH
@@ -1086,7 +1080,6 @@ function insertValue(value) {
   // 14. OCHISH
   // =========================================
 
-
 async function open(target, subject) {
   if (!target) return;
 
@@ -1118,17 +1111,22 @@ async function open(target, subject) {
       await loadMathLive();
 
       if (
+        !activeTarget ||
         activeTarget !== currentTarget ||
         modal.hidden
-      ) return;
+      ) {
+        return;
+      }
 
       unicodeEditor.hidden = true;
       mathEditor.hidden = false;
 
+      // Android oddiy klaviaturasini cheklash
       mathEditor.setAttribute("inputmode", "none");
       mathEditor.setAttribute("virtual-keyboard-mode", "manual");
       mathEditor.mathVirtualKeyboardPolicy = "manual";
 
+      // Avvalgi formulani olish
       const visualField =
         currentTarget.parentNode.querySelector(
           ".fm-replaced-math-view"
@@ -1138,6 +1136,7 @@ async function open(target, subject) {
         ? visualField.value
         : (currentTarget.value || "");
 
+      // MathLive klaviaturasini sozlash
       if (!mathEditor.dataset.keyboardConfigured) {
         mathEditor.addEventListener("focus", () => {
           if (window.mathVirtualKeyboard) {
@@ -1147,6 +1146,8 @@ async function open(target, subject) {
               "symbols",
               "greek"
             ];
+
+            window.mathVirtualKeyboard.show();
           }
         });
 
@@ -1155,9 +1156,29 @@ async function open(target, subject) {
 
       renderBank();
 
-      // MUHIM: avtomatik focus() va show() YO'Q.
-      // Foydalanuvchi oq formula maydonini bosib
-      // muharrirni faollashtiradi.
+      // Fokusni modal to'liq ochilgandan keyin berish
+      requestAnimationFrame(() => {
+        if (
+          !modal.hidden &&
+          activeTarget === currentTarget
+        ) {
+          mathEditor.setAttribute("inputmode", "none");
+          mathEditor.mathVirtualKeyboardPolicy = "manual";
+
+          mathEditor.focus({ preventScroll: true });
+
+          if (window.mathVirtualKeyboard) {
+            window.mathVirtualKeyboard.layouts = [
+              "numeric",
+              "alphabetic",
+              "symbols",
+              "greek"
+            ];
+
+            window.mathVirtualKeyboard.show();
+          }
+        }
+      });
 
     } catch (error) {
       console.error("MathLive xatosi:", error);
@@ -1185,7 +1206,6 @@ async function open(target, subject) {
     unicodeEditor.focus();
   }
 }
-
 
   // =========================================
   // 15. SAQLASH (FAQAT VIZUAL KO'RINISH QOLADIGAN QILIB YANGILANDI)
